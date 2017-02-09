@@ -16,7 +16,7 @@ import com.majid.bluetooth.R;
 import java.util.List;
 
 /**
- * Created by Matt on 5/12/2015.
+ * Created by majid on 2/9/17.
  */
 public class DeviceListAdapter extends ArrayAdapter<DeviceItem> {
 
@@ -45,7 +45,7 @@ public class DeviceListAdapter extends ArrayAdapter<DeviceItem> {
      */
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        View line = null;
+        //View line = null;
         DeviceItem item = (DeviceItem)getItem(position);
         final String name = item.getDeviceName();
         TextView macAddress = null;
@@ -62,13 +62,13 @@ public class DeviceListAdapter extends ArrayAdapter<DeviceItem> {
         viewToUse.setTag(holder);
 
         macAddress = (TextView)viewToUse.findViewById(R.id.macAddress);
-        line = (View)viewToUse.findViewById(R.id.line);
+        //line = (View)viewToUse.findViewById(R.id.line);
         holder.titleText.setText(item.getDeviceName());
         macAddress.setText(item.getAddress());
 
         if ( item.getDeviceName().toString() == "No Devices") {
             macAddress.setVisibility(View.INVISIBLE);
-            line.setVisibility(View.INVISIBLE);
+            //line.setVisibility(View.INVISIBLE);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
                     ((int) RelativeLayout.LayoutParams.WRAP_CONTENT, (int) RelativeLayout.LayoutParams.WRAP_CONTENT);
             params.addRule(RelativeLayout.CENTER_VERTICAL);
