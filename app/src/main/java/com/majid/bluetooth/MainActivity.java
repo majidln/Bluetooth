@@ -1,6 +1,7 @@
 package com.majid.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.majid.bluetooth.Fragment.DeviceListFragment;
+import com.majid.bluetooth.Model.DeviceItem;
+
 /*
 Created by majid on 2/9/17.
 */
@@ -55,11 +59,11 @@ public class MainActivity extends AppCompatActivity implements DeviceListFragmen
             Log.e("Error" , e.getMessage());
         }
 
-
     }
 
     @Override
-    public void onFragmentInteraction(String id) {
+    public void onFragmentInteraction(DeviceItem device) {
+        Toast.makeText(this , device.getDeviceName() ,  Toast.LENGTH_LONG).show();
 
     }
 }
