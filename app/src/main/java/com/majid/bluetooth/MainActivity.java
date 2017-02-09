@@ -70,13 +70,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     public void onFragmentInteraction(DeviceItem device) {
         Toast.makeText(this , device.getDeviceName() ,  Toast.LENGTH_LONG).show();
 
-        BluetoothDevice b2 = btAdapter.getRemoteDevice(device.getAddress());
+        BluetoothDevice selectedDevice = btAdapter.getRemoteDevice(device.getAddress());
 
-        UUID xxx = getUIUD();
-        new ConnectThread(b2 , xxx).connect();
+        UUID uuid = getUIUD();
+        ConnectThread connection = new ConnectThread(selectedDevice , MY_UUID);
+        connection.start();
+        connection.connect();
 
     }
-
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     public UUID getUIUD()  {
         UUID res = null;
         try{

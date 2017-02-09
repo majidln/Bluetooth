@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.UUID;
 
 /**
@@ -21,8 +22,10 @@ public class ConnectThread extends Thread {
 
         try {
             tmp = this.bTDevice.createRfcommSocketToServiceRecord(UUID);
+            Method m = bTDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
+            tmp = (BluetoothSocket) m.invoke(bTDevice, 1);
         }
-        catch (IOException e) {
+        catch (Exception e) {
             Log.d("CONNECTTHREAD", "Could not start listening for RFCOMM");
         }
         bTSocket = tmp;
