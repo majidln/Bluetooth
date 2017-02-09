@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * Created by majid on 2/9/17.
+ * Created by User on 6/3/2015.
  */
 public class ConnectThread extends Thread {
 

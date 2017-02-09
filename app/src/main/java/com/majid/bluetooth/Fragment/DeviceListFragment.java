@@ -63,8 +63,10 @@ public class DeviceListFragment extends Fragment implements AbsListView.OnItemCl
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 Log.d("DEVICELIST", "Bluetooth device found\n");
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
                 // Create a new device item
                 DeviceItem newDevice = new DeviceItem(device.getName(), device.getAddress(), "false");
+
                 // Add it to our adapter
                 mAdapter.add(newDevice);
                 mAdapter.notifyDataSetChanged();
