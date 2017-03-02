@@ -154,6 +154,7 @@ public class DeviceListFragment extends Fragment implements AbsListView.OnItemCl
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
+            Log.e("error", "Error: " + e.getMessage() + "...");
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }

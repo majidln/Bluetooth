@@ -1,11 +1,12 @@
 package com.majid.bluetooth;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.ParcelUuid;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +14,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.majid.bluetooth.Fragment.DeviceListFragment;
+import com.majid.bluetooth.Fragment.TransferFragment;
 import com.majid.bluetooth.Interface.OnFragmentInteractionListener;
 import com.majid.bluetooth.Model.DeviceItem;
-
-import java.lang.reflect.Method;
-import java.util.UUID;
+import com.majid.bluetooth.Utils.Constants;
 
 /*
 Created by majid on 2/9/17.
@@ -25,6 +25,8 @@ Created by majid on 2/9/17.
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
     private DeviceListFragment mDeviceListFragment;
+    private TransferFragment transferFragment;
+
     BluetoothAdapter btAdapter ;
     public static int REQUEST_BLUETOOTH = 1;
 
@@ -61,8 +63,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             fragmentManager.beginTransaction().replace(R.id.container, mDeviceListFragment).commit();
 
         }catch (Exception e){
-            Log.e("Error" , e.getMessage());
+            Log.d("error", "Error: " + e.getMessage() + "...");
         }
+
+        int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
 
     }
 
@@ -72,52 +79,23 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         BluetoothDevice selectedDevice = btAdapter.getRemoteDevice(device.getAddress());
 
-        UUID uuid = getUIUD();
-        ConnectThread connection = new ConnectThread(selectedDevice , MY_UUID);
+        ConnectThread connection = new ConnectThread(selectedDevice , Constants.MY_UUID);
         connection.start();
-        connection.connect();
 
-    }
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-    public UUID getUIUD()  {
-        UUID res = null;
-        try{
-            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if( connection.connect()){
+            try{
+                FragmentManager fragmentManager = getSupportFragmentManager();
 
-            Method getUuidsMethod = BluetoothAdapter.class.getDeclaredMethod("getUuids", null);
+                transferFragment = TransferFragment.newInstance(btAdapter , connection.getbTSocket());
+                fragmentManager.beginTransaction().replace(R.id.container, transferFragment).commit();
 
-            ParcelUuid[] uuids = (ParcelUuid[]) getUuidsMethod.invoke(adapter, null);
-
-            if(uuids.length > 0 ){
-                res = uuids[0].getUuid();
+            }catch (Exception e){
+                Log.e("error", "Error: " + e.getMessage() + "...");
             }
-        }catch (Exception e){
-            Log.d("System out", "android_id : ");
         }
-        return res;
+    }
 
+    public void displayFragment(int frag){
 
-//        String android_id = Settings.Secure.getString(getApplicationContext()
-//                .getContentResolver(), Settings.Secure.ANDROID_ID);
-//        Log.i("System out", "android_id : " + android_id);
-//
-//        final TelephonyManager tm = (TelephonyManager) getBaseContext()
-//                .getSystemService(Context.TELEPHONY_SERVICE);
-//
-//        final String tmDevice, tmSerial, androidId;
-//        tmDevice = "" + tm.getDeviceId();
-//        Log.i("System out", "tmDevice : " + tmDevice);
-//        tmSerial = "" + tm.getSimSerialNumber();
-//        Log.i("System out", "tmSerial : " + tmSerial);
-//        androidId = ""
-//                + android.provider.Settings.Secure.getString(
-//                getContentResolver(),
-//                android.provider.Settings.Secure.ANDROID_ID);
-//
-//        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice
-//                .hashCode() << 32)
-//                | tmSerial.hashCode());
-//
-//        return deviceUuid;
     }
 }

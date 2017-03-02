@@ -26,7 +26,8 @@ public class ConnectThread extends Thread {
             tmp = (BluetoothSocket) m.invoke(bTDevice, 1);
         }
         catch (Exception e) {
-            Log.d("CONNECTTHREAD", "Could not start listening for RFCOMM");
+            Log.e("error", "Error: " + e.getMessage() + "...");
+            Log.e("CONNECTTHREAD", "Could not start listening for RFCOMM");
         }
         bTSocket = tmp;
     }
@@ -36,11 +37,13 @@ public class ConnectThread extends Thread {
         try {
             bTSocket.connect();
         } catch(IOException e) {
-            Log.d("CONNECTTHREAD","Could not connect: " + e.toString());
+            Log.e("error", "Error: " + e.getMessage() + "...");
+            Log.e("CONNECTTHREAD","Could not connect: " + e.toString());
             try {
                 bTSocket.close();
             } catch(IOException close) {
-                Log.d("CONNECTTHREAD", "Could not close connection:" + e.toString());
+                Log.e("error", "Error: " + e.getMessage() + "...");
+                Log.e("CONNECTTHREAD", "Could not close connection:" + e.toString());
                 return false;
             }
         }
@@ -51,9 +54,20 @@ public class ConnectThread extends Thread {
         try {
             bTSocket.close();
         } catch(IOException e) {
+            Log.e("error", "Error: " + e.getMessage() + "...");
             return false;
         }
         return true;
     }
+
+    public BluetoothDevice getbTDevice() {
+        return bTDevice;
+    }
+
+    public BluetoothSocket getbTSocket() {
+        return bTSocket;
+    }
+
+
 
 }
