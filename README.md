@@ -2,6 +2,4 @@
 Simple android project for bluetooth manager
 
 This is a simple android project for discovery near bluetooth device, and connect to one of them.
-
-Reference file:
-https://github.com/majidln/Bluetooth/blob/master/Wirsing-SendingAndReceivingDataViaBluetoothWithAnAndroidDevice.pdf
+Send and receive between android device and bluetooth module

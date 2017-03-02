@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             Log.d("error", "Error: " + e.getMessage() + "...");
         }
 
+        //permision for android > 6
         int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
