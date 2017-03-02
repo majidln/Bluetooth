@@ -81,7 +81,7 @@ public class TransferFragment extends Fragment {
                         if (endOfLineIndex > 0) { 											// if end-of-line,
                             String sbprint = sb.substring(0, endOfLineIndex);				// extract string
                             sb.delete(0, sb.length());										// and clear
-                            setLog("Data from Arduino: " + sbprint);
+                            setLog( sbprint + "\n" );
                         }
                         //Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
                         break;
